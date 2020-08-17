@@ -9,7 +9,8 @@
 
 // my functions declarations
 FILE *open_file(const char *path);
-int *read_numbers(FILE *fp, int array[])
+int *read_numbers(FILE *fp, int array[], int size);
+void print_array(int *array);
 
 #endif // _UNIT_HEADER_
 
