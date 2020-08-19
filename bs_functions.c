@@ -15,49 +15,69 @@ FILE * open_file(const char *path)
 
 
 
-// read numbers into an array, return pointer to array
-int *read_numbers(FILE *fp, int array[], int size)
+// read numbers into dynamically allocated memory (at heap), return pointer to memory
+int *read_numbers(FILE *fp)
 {
-	// I need to declare an array which needs a fixed size
-	// I can implement a dynamic array-> if the elements surpass a certain	
-	// amount, then I create a new, bigger array and copy array1 into array2
-	
-	int *arr_pt = NULL;	
-	int array_position = 0;
-	
-	int check;
-	check = fscanf(fp, "%*s%d", &array[array_position]);
-	while (check == 1)
+	//int current_size = INIT_SIZE;
+
+	// malloc() memory of initial size
+	int *numbers_pt = malloc(INIT_SIZE * sizeof(int));
+	if (!numbers_pt)
 	{
-		
-		// check if number of items > size		
-		if (array_position == size)
-		{
-			// create new bigger array and copy a1 to a2
-			size = size * 2;			
-			int new_array[size];
-			for (int i = 0; i < array_position; i++)
-			{
-				new_array[i] = array[i]; 
-				printf("%d ", new_array[i]);
-			}
-			arr_pt = new_array;
-		}
-		array_position++;
-		check = fscanf(fp, "%*s%d", &array[array_position]);
+		fprintf(stderr, "Allocation problem\n");
+		exit(1);
 	}
-	array[array_position] = '\0';
-	return arr_pt;	
+	
+	// save the initial address of memory
+	int *copy_num = numbers_pt;
+	
+	// count number of items
+	int count = 0;
+
+	while ((fscanf(fp, "%d", &numbers_pt[count])) != EOF)
+	{
+		printf("%d ", *(numbers_pt + count));
+
+		// Add one to count of items
+		count++;
+	} 
+	printf("\n");
+	printf("END OF read_numbers()\n");
+
+	*(numbers_pt + count) = '\0';
+
+	return copy_num;	
 }
 
 
 // print content of array
-void print_array(int *array)
+void print_numbers(int *pt)
 {
-	int i = 0;
-	while (*(array + i) != '\0')
+	
+	while (*pt != '\0')
 	{
-		printf("%d ", *(array + i));
-		i++;
+		printf("%d ", *pt);
+		pt++;
 	}
+	printf("\n");
 }
+
+/*
+	// check if number of items > size		
+		if (count == current_size)
+		{
+			// Double the memory size 
+			current_size *= 2;
+			
+			// realloc() new memory
+			numbers_pt = realloc(numbers_pt, current_size);
+			if (!numbers_pt)
+			{
+				fprintf(stderr, "Allocation problem\n");
+				exit(1);
+			}
+			
+			// get new address
+			copy_num = numbers_pt;
+		}
+		*/
