@@ -16,9 +16,9 @@ FILE * open_file(const char *path)
 
 
 // read numbers into dynamically allocated memory (at heap), return pointer to memory
-int *read_numbers(FILE *fp)
+int *read_numbers(FILE *fp, int *count, int *size)
 {
-	//int current_size = INIT_SIZE;
+	*size = INIT_SIZE;
 
 	// malloc() memory of initial size
 	int *numbers_pt = malloc(INIT_SIZE * sizeof(int));
@@ -27,57 +27,47 @@ int *read_numbers(FILE *fp)
 		fprintf(stderr, "Allocation problem\n");
 		exit(1);
 	}
-	
-	// save the initial address of memory
-	int *copy_num = numbers_pt;
-	
-	// count number of items
-	int count = 0;
-
-	while ((fscanf(fp, "%d", &numbers_pt[count])) != EOF)
+		
+	while ((fscanf(fp, "%d", &numbers_pt[*count])) != EOF)
 	{
-		printf("%d ", *(numbers_pt + count));
+		printf("%d ", *(numbers_pt + *count));
 
 		// Add one to count of items
-		count++;
-	} 
-	printf("\n");
-	printf("END OF read_numbers()\n");
-
-	*(numbers_pt + count) = '\0';
-
-	return copy_num;	
-}
-
-
-// print content of array
-void print_numbers(int *pt)
-{
-	
-	while (*pt != '\0')
-	{
-		printf("%d ", *pt);
-		pt++;
-	}
-	printf("\n");
-}
-
-/*
-	// check if number of items > size		
-		if (count == current_size)
+		*count += 1;
+		
+		// check if number of items > size		
+		if (*count == *size)
 		{
 			// Double the memory size 
-			current_size *= 2;
+			*size *= 2;
 			
 			// realloc() new memory
-			numbers_pt = realloc(numbers_pt, current_size);
+			numbers_pt = realloc(numbers_pt, *size);
 			if (!numbers_pt)
 			{
 				fprintf(stderr, "Allocation problem\n");
 				exit(1);
 			}
 			
-			// get new address
-			copy_num = numbers_pt;
 		}
-		*/
+	} 
+	printf("\n");
+	printf("END OF read_numbers()\n");
+
+	return numbers_pt;	
+}
+
+
+// print content of array
+void print_numbers(int *pt, int *count, int *size)
+{
+	int i;
+	for (i = 0; i < *count; i++)
+	{
+		printf("%d ", *(pt + i));
+	}
+	printf("\n");
+	printf("Number of items: %d\n", *count);
+	printf("Size of array: %d\n", *size);	
+}
+
