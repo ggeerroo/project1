@@ -12,7 +12,7 @@
 
 // my functions declarations
 FILE *open_file(const char *path);
-int *read_numbers(FILE *fp, int *count, int *size);
+int *read_numbers(FILE *fp, int *array, int *count, int *size);
 void print_numbers(int *pt, int *count, int *size);
 
 #endif // _UNIT_HEADER_

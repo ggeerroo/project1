@@ -16,21 +16,21 @@ FILE * open_file(const char *path)
 
 
 // read numbers into dynamically allocated memory (at heap), return pointer to memory
-int *read_numbers(FILE *fp, int *count, int *size)
+int *read_numbers(FILE *fp, int *array_pt, int *count, int *size)
 {
 	*size = INIT_SIZE;
 
 	// malloc() memory of initial size
-	int *numbers_pt = malloc(INIT_SIZE * sizeof(int));
-	if (!numbers_pt)
+	array_pt = malloc(INIT_SIZE * sizeof(int));
+	if (!array_pt)
 	{
 		fprintf(stderr, "Allocation problem\n");
 		exit(1);
 	}
 		
-	while ((fscanf(fp, "%d", &numbers_pt[*count])) != EOF)
+	while ((fscanf(fp, "%d", &array_pt[*count])) != EOF)
 	{
-		printf("%d ", *(numbers_pt + *count));
+		printf("%d ", *(array_pt + *count));
 
 		// Add one to count of items
 		*count += 1;
@@ -42,8 +42,8 @@ int *read_numbers(FILE *fp, int *count, int *size)
 			*size *= 2;
 			
 			// realloc() new memory
-			numbers_pt = realloc(numbers_pt, *size);
-			if (!numbers_pt)
+			array_pt = realloc(array_pt, *size);
+			if (!array_pt)
 			{
 				fprintf(stderr, "Allocation problem\n");
 				exit(1);
@@ -54,7 +54,7 @@ int *read_numbers(FILE *fp, int *count, int *size)
 	printf("\n");
 	printf("END OF read_numbers()\n");
 
-	return numbers_pt;	
+	return array_pt;	
 }
 
 

@@ -2,6 +2,9 @@
 
 int main(int argc, char *argv[])
 {
+	// declare pointer to array
+	int *array_pt = NULL;
+
 	// initialize counters for number of items in array + size of array
 	int count = 0, size = 0;
 	
@@ -23,13 +26,13 @@ int main(int argc, char *argv[])
 	FILE *file = open_file(path);
 
 	// read numbers into an array 
-	int * num_pt = read_numbers(file, count_pt, size_pt);
+	array_pt = read_numbers(file, array_pt, count_pt, size_pt);
 	
 	// print array one by one
-	print_numbers(num_pt, count_pt,size_pt);
+	print_numbers(array_pt, count_pt,size_pt);
 	
 	// GC
-	free(num_pt);
+	free(array_pt);
 
 	// close file
 	fclose(file);
