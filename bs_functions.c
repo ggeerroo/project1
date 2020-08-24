@@ -42,7 +42,7 @@ int *read_numbers(FILE *fp, int *array_pt, int *count, int *size)
 			*size *= 2;
 			
 			// realloc() new memory
-			array_pt = realloc(array_pt, *size);
+			array_pt = realloc(array_pt, *size * sizeof(int));
 			if (!array_pt)
 			{
 				fprintf(stderr, "Allocation problem\n");
