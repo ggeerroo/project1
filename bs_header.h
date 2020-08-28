@@ -4,6 +4,8 @@
 // Includes
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
 
 // Definitions
 #define INIT_SIZE 5

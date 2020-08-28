@@ -13,11 +13,22 @@ int main(int argc, char *argv[])
 	int * size_pt = &size;
 
 	// sanitize command line arguments
-	if (argc != 2)
+	if (argc != 3)
 	{	
-		printf("Usage: program_name your_file\n");
+		printf("Usage: *program*  *file*  *number*\n");
 		return 1;
 	}
+	
+	// get number from command line
+	int number;
+	if ((number = atoi(argv[2])) == 0)
+	{
+		printf("*number* should be an integer\n");
+		printf("Usage: *program*  *file*  *number*\n");
+		return 1;
+	}
+		
+	printf("number: %d\n", number);
 
 	// get the name of the file
 	char *path = argv[1];
