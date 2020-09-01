@@ -42,6 +42,12 @@ int main(int argc, char *argv[])
 	// print array one by one
 	print_numbers(array_pt, count_pt,size_pt);
 	
+	// sort array
+	sort(array_pt, count);
+	
+	// print sorted array
+	print_numbers(array_pt, count_pt,size_pt);
+
 	// GC
 	free(array_pt);
 

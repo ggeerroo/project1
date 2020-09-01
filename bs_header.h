@@ -16,6 +16,9 @@
 FILE *open_file(const char *path);
 int *read_numbers(FILE *fp, int *array, int *count, int *size);
 void print_numbers(int *pt, int *count, int *size);
+void sort(int *arr, int elements_array);
+void merge(int *arr, int *temp, int leftStart, int rightEnd);
+void merge_sort(int *arr, int *temp, int left, int right);
 
 #endif // _UNIT_HEADER_
 
