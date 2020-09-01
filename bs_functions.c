@@ -30,7 +30,7 @@ int *read_numbers(FILE *fp, int *array_pt, int *count, int *size)
 		
 	while ((fscanf(fp, "%d", &array_pt[*count])) != EOF)
 	{
-		printf("%d ", *(array_pt + *count));
+		// printf("%d ", *(array_pt + *count));
 
 		// Add one to count of items
 		*count += 1;
@@ -51,9 +51,6 @@ int *read_numbers(FILE *fp, int *array_pt, int *count, int *size)
 			
 		}
 	} 
-	printf("\n");
-	printf("END OF read_numbers()\n");
-
 	return array_pt;	
 }
 
@@ -86,45 +83,40 @@ void sort(int *arr, int elements_array)
 
 	// call of actual merge_sort function
 	merge_sort(arr, temp, leftStart, rightEnd);
+	
+	free(temp);
 }
 
 // mergesort algorithm
 void merge_sort(int *arr, int *temp, int left, int right)
 {
-	if (left >= right) return; // IT'S SORTED! (recursion base case)
-		
-	int middle = (left + right) / 2; // this expression is what makes 
-									 // the array smaller with each recursive call
-	merge_sort(arr, temp, left, middle); // sort left half
-	merge_sort(arr, temp, middle + 1, right); // sort right half
-	merge(arr, temp, left, right); // merge two halves 
-							 // (here I'm passing the last values for 
-							 //	left and right before we reached the base case,
-							 // which means that on the first call is gonna be 0 and 0?)
-							// NO, BECAUSE IF left == right MEANS THAT IT'S A BASE CASE (SO IT'S SORTED)
-}
+	if (left >= right) return;            // If it's a base case, we are done here, go back.
+	
+	int middle = (left + right) / 2; 	  // Else, cut the array in half.
 
-// merge algorithm
-void merge(int *arr, int *temp, int leftStart, int rightEnd)
-{
-	int temp_index = leftStart;
-	int left = leftStart;
-	int leftEnd = (leftStart + rightEnd) / 2;
-	int right = leftEnd + 1;
+	merge_sort(arr, temp, left, middle); 		// sort left half
+	merge_sort(arr, temp, middle + 1, right); 	// sort right half
+	
+
+	// merge algorithm
+	int index = left;
+	int leftEnd = (left + right) / 2;
+	int rightEnd = right;
+	right = leftEnd + 1; // we redefine right to start at first element of right half
 
 	while (left <= leftEnd && right <= rightEnd)	
 	{
 		if (arr[left] <= arr[right])     // when we have one element to merge, 								
 		{                                // these two are pointing to the same memory address?? 
-			temp[temp_index] = arr[left]; // NO, BECAUSE WE NEVER MERGE 1 ELEMENT
+			temp[index] = arr[left]; 	// NO, BECAUSE WE NEVER MERGE 1 ELEMENT (that's the base case, which means is sorted) 
 			left++;
 		}
 		else
 		{
-			temp[temp_index] = arr[right];
+			temp[index] = arr[right];
 			right++;
 		}
-		temp_index++;
+		index++;
 	}	
 	
 	// copy rest of right half into temp	
@@ -132,7 +124,7 @@ void merge(int *arr, int *temp, int leftStart, int rightEnd)
 	{
 		for (int i = 0; i <= (rightEnd - right); i++)
 		{
-			temp[temp_index + i] = arr[right + i];
+			temp[index + i] = arr[right + i];
 		}
 	}
 	// copy rest of left half into temp
@@ -140,7 +132,7 @@ void merge(int *arr, int *temp, int leftStart, int rightEnd)
 	{
 		for (int i = 0; i <= (leftEnd - left); i++)
 		{
-			temp[temp_index + i] = arr[left + i];
+			temp[index + i] = arr[left + i];
 		}
 	}
 	// copy temp into arr

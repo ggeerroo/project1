@@ -40,12 +40,14 @@ int main(int argc, char *argv[])
 	array_pt = read_numbers(file, array_pt, count_pt, size_pt);
 	
 	// print array one by one
+	printf("Unsorted array:\n");
 	print_numbers(array_pt, count_pt,size_pt);
 	
 	// sort array
 	sort(array_pt, count);
 	
 	// print sorted array
+	printf("Sorted array:\n");
 	print_numbers(array_pt, count_pt,size_pt);
 
 	// GC
