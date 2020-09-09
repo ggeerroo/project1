@@ -56,16 +56,14 @@ int *read_numbers(FILE *fp, int *array_pt, int *count, int *size)
 
 
 // print content of array
-void print_numbers(int *pt, int *count, int *size)
+void print_numbers(int *pt, int *count)
 {
 	int i;
 	for (i = 0; i < *count; i++)
 	{
-		printf("%d ", *(pt + i));
+		printf("%d ", pt[i]);
 	}
-	printf("\n");
-	printf("Number of items: %d\n", *count);
-	printf("Size of array: %d\n", *size);	
+	printf("\n");	
 }
 
 // sort
@@ -138,3 +136,57 @@ void merge_sort(int *arr, int *temp, int left, int right)
 	// copy temp into arr
 	for (int i = 0; i <= rightEnd; i++) 	arr[i] = temp[i];
 }
+
+// search for number in array
+void search(int *arr, int *num_elements, int number)
+{
+	int right = *num_elements - 1;
+	int left = 0;
+	int centre = right;
+	
+	while (arr[centre] != number) 
+	{
+		centre = (left + right) / 2;
+
+		if (centre == right || centre == left) // the number is not in the array
+		{
+			printf("Sorry, your number is not in the array.\n");
+			return;
+		}		
+		else if (arr[centre] > number)
+		{
+			right = centre;
+		}
+		else 
+		{
+			left = centre;
+		}		
+	}
+	
+	printf("Your number is in the array! :)\n");
+	// decorated print
+	print_numbers_deco(arr, num_elements, number);
+	return;
+}
+
+
+// print array with user's number highlighted
+void print_numbers_deco(int *pt, int *count, int number)
+{
+	int i;
+	for (i = 0; i < *count; i++)
+	{	
+		if (pt[i] == number)
+		{
+			printf("**%d** ", pt[i]);
+		}
+		else
+		{
+			printf("%d ", pt[i]);
+		}
+	}
+	printf("\n");	
+}
+
+
+

@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 		
-	printf("number: %d\n", number);
+	printf("Your number: %d\n", number);
 
 	// get the name of the file
 	char *path = argv[1];
@@ -41,26 +41,22 @@ int main(int argc, char *argv[])
 	
 	// print array one by one
 	printf("Unsorted array:\n");
-	print_numbers(array_pt, count_pt,size_pt);
+	print_numbers(array_pt, count_pt);
 	
 	// sort array
 	sort(array_pt, count);
 	
 	// print sorted array
 	printf("Sorted array:\n");
-	print_numbers(array_pt, count_pt,size_pt);
+	print_numbers(array_pt, count_pt);
+
+	// search for given number		
+	search(array_pt, count_pt, number);
 
 	// GC
 	free(array_pt);
 
 	// close file
 	fclose(file);
-
-	// menu (input number to search)
-	// search
-	// output: found/ not found + place in the array
-
-
-
 }
 
