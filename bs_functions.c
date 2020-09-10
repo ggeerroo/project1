@@ -98,7 +98,7 @@ void merge_sort(int *arr, int *temp, int left, int right)
 
 	// merge algorithm
 	int index = left;
-	int leftEnd = (left + right) / 2;
+	int leftEnd = middle;
 	int rightEnd = right;
 	right = leftEnd + 1; // we redefine right to start at first element of right half
 
