@@ -144,25 +144,37 @@ void search(int *arr, int *num_elements, int number)
 	int left = 0;
 	int centre = right;
 	
-	while (arr[centre] != number) 
+	for (;;)
 	{
-		centre = (left + right) / 2;
-
-		if (centre == right || centre == left) // the number is not in the array
+		// if the array has 2 or 1 elements
+		if ((*num_elements <= 2) && (arr[left] == number || arr[right] == number))
 		{
-			printf("Sorry, your number is not in the array.\n");
-			return;
-		}		
-		else if (arr[centre] > number)
-		{
-			right = centre;
+			break; // we found the number in an array of size <= 2
 		}
-		else 
+		else
 		{
-			left = centre;
-		}		
+			while (arr[centre] != number) 
+			{
+				// find the centre
+				centre = (left + right) / 2;
+				
+				if (centre == right || centre == left) // the number is not in the array
+				{
+					printf("Sorry, your number is not in the array.\n");
+					return;
+				}		
+				else if (arr[centre] > number)
+				{
+					right = centre;
+				}
+				else 
+				{
+					left = centre;
+				}		
+			}
+		break; // we found the number in the array
+		}
 	}
-	
 	printf("Your number is in the array! :)\n");
 	// decorated print
 	print_numbers_deco(arr, num_elements, number);
